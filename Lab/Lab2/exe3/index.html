@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        display: flex;
+        flex-direction: column;
+        min-height: 500px;
+        max-width: 1200px;
+        margin: 0 auto;
+        border: 2px solid #000000;
+        background-color: white;
+      }
+      header {
+        align-items: center;
+        height: 100px;
+        display: flex;
+        flex-direction: row;
+        border-bottom: 3px solid #e69b10;
+        padding: 20px;
+      }
+
+      .logo {
+        width: 80px;
+        height: 80px;
+        margin-right: 30px;
+      }
+      .header-title {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .title {
+        color: #f4a251;
+        font-size: 36px;
+        text-shadow: 3px 3px 0px rgba(0, 0, 0, 1);
+        margin: 0;
+      }
+      .sub-title {
+        color: #000;
+        font-size: 18px;
+        font-style: italic;
+        font-weight: bold;
+        margin: 0;
+      }
+
+      .main-container {
+        padding: 20px;
+        display: flex;
+        border-bottom: 3px solid #e69b10;
+        gap: 10px;
+      }
+      .main-container main {
+        flex: 2;
+      }
+      .speaker-name {
+        text-decoration: underline;
+        font-weight: bold;
+      }
+
+      .main-container aside {
+        flex: 1;
+        background-color: #f4a35147;
+        padding: 12px;
+      }
+      .main-container h4 {
+        color: #a50404;
+      }
+      .footer {
+        padding: 10px 20px;
+        align-self: flex-end;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <img src="logo.png" class="logo" />
+        <div class="header-title">
+          <h1 class="title">San Joaquin Valley Town Hall</h1>
+          <p class="sub-title">Bringing cutting-edge speakers to the valley</p>
+        </div>
+      </header>
+      <div class="main-container">
+        <main>
+          <h2>This season's guest speakers</h2>
+          <ul>
+            <li>October: <span class="speaker-name">David Brancaccio</span></li>
+            <li>
+              November: <span class="speaker-name">Andrew Ross Sorkin</span>
+            </li>
+            <li>January: <span class="speaker-name">Amy Chua</span></li>
+            <li>February: <span class="speaker-name">Scott Sampson</span></li>
+            <li>March: <span class="speaker-name">Carlos Eire</span></li>
+            <li>April: <span class="speaker-name">Ronan Tynan</span></li>
+          </ul>
+
+          <h3>Looking for a unique gift?</h3>
+          <p>
+            Town Hall has the answer. For only $100, you can get a book of
+            tickets for all of the remaining speakers. And the bargain includes
+            a second book of tickets for a companion.
+          </p>
+
+          <p>
+            Or, for $50, you can give yourself the gift of one of our speakers,
+            and still get an extra ticket for a companion, but just for one of
+            the events.
+          </p>
+
+          <p>See you at the next show?</p>
+
+          <p class="contact">
+            <strong> <i>Contact us by phone</i></strong> at (559) 555-1212 for
+            ticket information.
+          </p>
+        </main>
+        <aside>
+          <h3>Lecture notes</h3>
+
+          <h4>Event change for November</h4>
+          <p>
+            SJV Town Hall is pleased to announce the addition of award-winning
+            author Andrew Ross Sorkin. The appearance of previously scheduled
+            speaker, Greg Mortenson, has been postponed.
+          </p>
+
+          <h4>Lecture day, time, and location</h4>
+          <p>
+            All one-hour lectures are on Wednesday of the month beginning at
+            10:30 a.m. at William Saroyan Theatre, 700 M Street, Fresno, CA.
+          </p>
+        </aside>
+      </div>
+      <footer class="footer">
+        © Copyright 2022 San Joaquin Valley Town Hall.
+      </footer>
+    </div>
+  </body>
+</html>
