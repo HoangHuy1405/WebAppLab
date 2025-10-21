@@ -230,10 +230,40 @@
         console.log(isPasswordValid);
         console.log(isConfirmValid);
 
+        var submitBtn = document.getElementById("submitBtn");
+        submitBtn.disabled = !(
+          isUsernameValid &&
+          isEmailValid &&
+          isPasswordValid &&
+          isConfirmValid
+        );
+
         return (
           isUsernameValid && isEmailValid && isPasswordValid && isConfirmValid
         );
       }
+
+      // Real-time validation
+      document
+        .getElementById("username")
+        .addEventListener("input", function () {
+          validateUsername(this);
+        });
+
+      document.getElementById("email").addEventListener("input", function () {
+        validateEmail(this);
+      });
+      document
+        .getElementById("password")
+        .addEventListener("input", function () {
+          validatePassword(this);
+        });
+      document
+        .getElementById("confirm-password")
+        .addEventListener("input", function () {
+          const pass1 = document.getElementById("password");
+          validatePasswordMatch(pass1, this);
+        });
 
       document
         .getElementById("signupForm")
