@@ -138,6 +138,72 @@
       <footer class="footer">
         © Copyright 2022 San Joaquin Valley Town Hall.
       </footer>
+      <form name="langForm">
+        <input type="text" name="langField" onChange="checkLanguage()" />
+        <input type="submit" value="show it to me" />
+      </form>
     </div>
+    <script type="text/javascript">
+      function referringPage() {
+        if (document.referrer.length == 0) {
+          return "<i>None</i>";
+        } else {
+          return document.referrer;
+        }
+      }
+      document.writeln(
+        "Document info: \n" +
+          "<ul> " +
+          "<li> url" +
+          document.location +
+          "\n" +
+          "<li> modification date" +
+          document.lastModified +
+          "\n" +
+          "<li> title" +
+          document.title +
+          "\n" +
+          "<li> referring page" +
+          referringPage() +
+          "\n </ul>"
+      );
+      document.writeln(
+        "Browser Info:" +
+          "\n" +
+          "<UL>" +
+          "\n" +
+          "  <LI><B>Name:</B> " +
+          navigator.appName +
+          "\n" +
+          "  <LI><B>Version:</B> " +
+          navigator.appVersion +
+          "\n" +
+          "</UL>"
+      );
+      function checkLanguage() {
+        var field = document.forms["langForm"].elements["langField"];
+        var lang = field.value;
+        var prefix = lang.substring(0, 4).toUpperCase();
+        console.log(prefix);
+        if (prefix != "JAVA") {
+          alert("Sorry " + field.value + " is not valid. Pls try again");
+          field.value = "";
+          field.focus();
+        }
+      }
+      function cookieVal(cookieName, cookieString) {
+        var startLoc = cookieString.indexOf(cookieName);
+        if (startLoc == -1) {
+          return ""; // No such cookie
+        }
+        var sepLoc = cookieString.indexOf("=", startLoc);
+        var endLoc = cookieString.indexOf(";", startLoc);
+        if (endLoc == -1) {
+          // Last one has no ";"
+          endLoc = cookieString.length;
+        }
+        return cookieString.substring(sepLoc + 1, endLoc);
+      }
+    </script>
   </body>
 </html>
