@@ -4,9 +4,11 @@
 *.pdf
 
 # Ignore Word documents
-*.doc
-*.docx
+# *.doc
+# *.docx
 
 #
 *.md
+*.zip
 
+/Lab/Lab4/StudentManagement/target/
