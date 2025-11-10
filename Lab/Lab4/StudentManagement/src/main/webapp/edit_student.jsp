@@ -28,6 +28,20 @@
         }
         .error { background: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px; margin-bottom: 20px; }
     </style>
+    <script>
+        setTimeout(function() {
+            var messages = document.querySelectorAll('.error');
+            messages.forEach(function(msg) {
+                msg.style.display = 'none';
+            });
+        }, 3000);
+        function submitForm(form) {
+            var btn = form.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.textContent = 'Processing...';
+            return true;
+        }
+    </script>
 </head>
 <body>
 <%
@@ -98,10 +112,10 @@
         <h2>✏️ Edit Student Information</h2>
         
         <% if (request.getParameter("error") != null) { %>
-            <div class="error"><%= request.getParameter("error") %></div>
+            <div class="error"> ✗ <%= request.getParameter("error") %></div>
         <% } %>
-        
-        <form action="process_edit.jsp" method="POST">
+        ad
+        <form action="process_edit.jsp" method="POST" onsubmit="return submitForm(this)>
             <input type="hidden" name="id" value="<%= studentId %>">
             
             <div class="form-group">

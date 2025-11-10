@@ -63,6 +63,20 @@
         }
         .required { color: red; }
     </style>
+    <script>
+        setTimeout(function() {
+            var messages = document.querySelectorAll('.error');
+            messages.forEach(function(msg) {
+                msg.style.display = 'none';
+            });
+        }, 3000);
+        function submitForm(form) {
+            var btn = form.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.textContent = 'Processing...';
+            return true;
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -70,16 +84,15 @@
         
         <% if (request.getParameter("error") != null) { %>
             <div class="error">
-                <%= request.getParameter("error") %>
+                ✗ <%= request.getParameter("error") %>
             </div>
         <% } %>
         
-        <form action="process_add.jsp" method="POST">
+        <form action="process_add.jsp" method="POST" onsubmit="return submitForm(this)">
             <div class="form-group">
                 <label for="student_code">Student Code <span class="required">*</span></label>
                 <input type="text" id="student_code" name="student_code" 
                        placeholder="e.g., SV001" required 
-                       pattern="[A-Z]{2}[0-9]{3,}"
                        title="Format: 2 uppercase letters + 3+ digits">
             </div>
             

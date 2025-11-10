@@ -4,8 +4,8 @@
 *.pdf
 
 # Ignore Word documents
-# *.doc
-# *.docx
+*.doc
+*.docx
 
 #
 *.md
