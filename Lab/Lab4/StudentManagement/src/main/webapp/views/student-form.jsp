@@ -57,6 +57,12 @@
             border-radius: 5px;
             margin-bottom: 20px;
         }
+        .error-text {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -83,24 +89,37 @@
                 <input type="text" name="studentCode" 
                        value="${student.studentCode}" 
                        ${student != null ? 'readonly' : 'required'}>
+                
+                <c:if test="${not empty errorCode}">
+                    <span class="error-text">${errorCode}</span>
+                </c:if>
             </div>
             
             <div class="form-group">
                 <label>Full Name:</label>
                 <input type="text" name="fullName" 
                        value="${student.fullName}" required>
+                <c:if test="${not empty errorName}">
+                    <span class="error-text">${errorName}</span>
+                </c:if>
             </div>
             
             <div class="form-group">
                 <label>Email:</label>
                 <input type="email" name="email" 
                        value="${student.email}">
+                <c:if test="${not empty errorEmail}">
+                    <span class="error-text">${errorEmail}</span>
+                </c:if>
             </div>
             
             <div class="form-group">
                 <label>Major:</label>
                 <input type="text" name="major" 
                        value="${student.major}">
+                <c:if test="${not empty errorMajor}">
+                    <span class="error-text">${errorMajor}</span>
+                </c:if>
             </div>
             
             <button type="submit" class="btn-submit">

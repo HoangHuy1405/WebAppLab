@@ -5,7 +5,7 @@
 
 # Ignore Word documents
 *.doc
-*.docx
+*.docx  
 
 #
 *.md
@@ -13,3 +13,4 @@
 
 /Lab/Lab4/StudentManagement/target/
 /Lab/Lab5/StudentManagement/target/
+/Lab/Lab4/StudentManagement/nbproject/
