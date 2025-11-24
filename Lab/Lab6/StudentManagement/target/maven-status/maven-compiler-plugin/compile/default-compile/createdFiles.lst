@@ -9,6 +9,9 @@ filter\AuthFilter.class
 controller\LoginController.class
 model\Student.class
 dao\UserDAO.class
+util\CookieUtil.class
+controller\ChangePasswordController.class
 controller\LogoutController.class
 com\mycompany\studentmanagement\JakartaRestConfiguration.class
+controller\ThemeController.class
 model\User.class

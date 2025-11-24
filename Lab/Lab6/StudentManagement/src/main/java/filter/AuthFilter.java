@@ -1,11 +1,15 @@
 package filter;
 
+import dao.UserDAO;
+import model.User;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import javax.servlet.http.Cookie;
 
 /**
  * Authentication Filter - Checks if user is logged in
@@ -38,30 +42,53 @@ public class AuthFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         
-        String requestURI = httpRequest.getRequestURI();
-        String contextPath = httpRequest.getContextPath();
-        String path = requestURI.substring(contextPath.length());
+        String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
         
-        System.out.println("Path = " + path);
-        
-        // Check if this is a public URL
         if (isPublicUrl(path)) {
-            // Allow access to public URLs
             chain.doFilter(request, response);
             return;
         }
         
-        // Check if user is logged in
         HttpSession session = httpRequest.getSession(false);
         boolean isLoggedIn = (session != null && session.getAttribute("user") != null);
         
+        if (!isLoggedIn) {
+            String token = null;
+            Cookie[] cookies = httpRequest.getCookies();
+            
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if ("remember_token".equals(cookie.getName())) {
+                        token = cookie.getValue();
+                        break;
+                    }
+                }
+            }
+            
+            if (token != null) {
+                UserDAO userDAO = new UserDAO();
+                User user = userDAO.getUserByToken(token);
+                
+                if (user != null) {
+                    session = httpRequest.getSession(true);
+                    session.setAttribute("user", user);
+                    session.setAttribute("role", user.getRole());
+                    session.setAttribute("fullName", user.getFullName());
+                    isLoggedIn = true; // Mark as logged in
+                    System.out.println("Auto-login successful for: " + user.getUsername());
+                } else {
+                    Cookie deleteCookie = new Cookie("remember_token", "");
+                    deleteCookie.setMaxAge(0);
+                    deleteCookie.setPath("/");
+                    httpResponse.addCookie(deleteCookie);
+                }
+            }
+        }
+        
         if (isLoggedIn) {
-            // User is logged in, allow access
             chain.doFilter(request, response);
         } else {
-            // User not logged in, redirect to login
-            String loginURL = contextPath + "/login";
-            httpResponse.sendRedirect(loginURL);
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
         }
     }
     

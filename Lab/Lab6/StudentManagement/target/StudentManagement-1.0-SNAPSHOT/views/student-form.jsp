@@ -129,5 +129,25 @@
             <a href="student?action=list" class="btn-cancel">Cancel</a>
         </form>
     </div>
+    <script>
+        const SESSION_TIMEOUT = 30 * 60 * 1000;
+        let lastActivity = Date.now();
+
+        ['mousemove', 'keypress', 'click'].forEach(event => {
+        document.addEventListener(event, () => lastActivity = Date.now());
+        });
+
+        setInterval(() => {
+        const timeRemaining = SESSION_TIMEOUT - (Date.now() - lastActivity);
+        const minutesLeft = Math.floor(timeRemaining / 60000);
+
+        if (timeRemaining <= 0) {
+            alert('Session expired. Please login again.');
+            window.location.href = 'logout';
+        } else if (minutesLeft <= 5 && minutesLeft > 0) {
+            console.warn(`⚠️ Session expires in ${minutesLeft} minutes`);
+        }
+        }, 60000);
+    </script>
 </body>
 </html>

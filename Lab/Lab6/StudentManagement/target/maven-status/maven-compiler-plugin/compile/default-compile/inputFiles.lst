@@ -5,10 +5,13 @@ D:\IU\Learn\WebApp\WebAppLab\Lab\Lab6\StudentManagement\src\main\java\com\mycomp
 D:\IU\Learn\WebApp\WebAppLab\Lab\Lab6\StudentManagement\src\main\java\controller\DashboardController.java
 D:\IU\Learn\WebApp\WebAppLab\Lab\Lab6\StudentManagement\src\main\java\model\User.java
 D:\IU\Learn\WebApp\WebAppLab\Lab\Lab6\StudentManagement\src\main\java\controller\LogoutController.java
+D:\IU\Learn\WebApp\WebAppLab\Lab\Lab6\StudentManagement\src\main\java\util\CookieUtil.java
 D:\IU\Learn\WebApp\WebAppLab\Lab\Lab6\StudentManagement\src\main\java\test\Test.java
 D:\IU\Learn\WebApp\WebAppLab\Lab\Lab6\StudentManagement\src\main\java\controller\LoginController.java
 D:\IU\Learn\WebApp\WebAppLab\Lab\Lab6\StudentManagement\src\main\java\com\mycompany\studentmanagement\JakartaRestConfiguration.java
 D:\IU\Learn\WebApp\WebAppLab\Lab\Lab6\StudentManagement\src\main\java\util\PasswordHashGenerator.java
+D:\IU\Learn\WebApp\WebAppLab\Lab\Lab6\StudentManagement\src\main\java\controller\ChangePasswordController.java
+D:\IU\Learn\WebApp\WebAppLab\Lab\Lab6\StudentManagement\src\main\java\controller\ThemeController.java
 D:\IU\Learn\WebApp\WebAppLab\Lab\Lab6\StudentManagement\src\main\java\dao\StudentDAO.java
 D:\IU\Learn\WebApp\WebAppLab\Lab\Lab6\StudentManagement\src\main\java\controller\StudentController.java
 D:\IU\Learn\WebApp\WebAppLab\Lab\Lab6\StudentManagement\src\main\java\filter\AdminFilter.java

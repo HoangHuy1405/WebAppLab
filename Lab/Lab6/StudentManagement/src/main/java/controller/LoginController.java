@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.UUID;
+import javax.servlet.http.Cookie;
 
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
@@ -48,44 +50,43 @@ public class LoginController extends HttpServlet {
         
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String rememberMe = request.getParameter("remember");
+        // Use "rememberMe" to match the JSP checkbox name
+        String rememberMe = request.getParameter("rememberMe");
         
-        // Validate input
-        if (username == null || username.trim().isEmpty() ||
-            password == null || password.trim().isEmpty()) {
-            
+        if (username == null || username.trim().isEmpty() || password == null || password.trim().isEmpty()) {
             request.setAttribute("error", "Username and password are required");
             request.getRequestDispatcher("/views/login.jsp").forward(request, response);
             return;
         }
         
-        // Authenticate user
         User user = userDAO.authenticate(username, password);
         
         if (user != null) {
-            // Authentication successful
-            
-            // Invalidate old session (prevent session fixation)
             HttpSession oldSession = request.getSession(false);
-            if (oldSession != null) {
-                oldSession.invalidate();
-            }
+            if (oldSession != null) oldSession.invalidate();
             
-            // Create new session
             HttpSession session = request.getSession(true);
             session.setAttribute("user", user);
             session.setAttribute("role", user.getRole());
             session.setAttribute("fullName", user.getFullName());
-            
-            // Set session timeout (30 minutes)
             session.setMaxInactiveInterval(30 * 60);
             
-            // Handle "Remember Me" (optional - cookie implementation)
+            // --- REMEMBER ME IMPLEMENTATION ---
             if ("on".equals(rememberMe)) {
-                // TODO: Implement remember me functionality with cookie
+                // 1. Generate secure random token
+                String token = UUID.randomUUID().toString();
+                
+                // 2. Save to DB
+                userDAO.saveRememberToken(user.getId(), token);
+                
+                // 3. Create Cookie
+                Cookie rememberCookie = new Cookie("remember_token", token);
+                rememberCookie.setMaxAge(30 * 24 * 60 * 60); // 30 days
+                rememberCookie.setPath("/"); // Available for entire app
+                rememberCookie.setHttpOnly(true); // Secure against XSS
+                response.addCookie(rememberCookie);
             }
             
-            // Redirect based on role
             if (user.isAdmin()) {
                 response.sendRedirect("dashboard");
             } else {
@@ -93,9 +94,8 @@ public class LoginController extends HttpServlet {
             }
             
         } else {
-            // Authentication failed
             request.setAttribute("error", "Invalid username or password");
-            request.setAttribute("username", username); // Keep username in form
+            request.setAttribute("username", username);
             request.getRequestDispatcher("/views/login.jsp").forward(request, response);
         }
     }
