@@ -1,17 +1,17 @@
 package filter;
 
-import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebFilter;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
  * Authentication Filter - Checks if user is logged in
  * Protects all pages except login and public resources
  */
-@WebFilter(filterName = "AuthFilter", urlPatterns = {"/*"})
+@WebFilter(filterName = "AuthFilter", urlPatterns = {"/student", "/student/*"})
 public class AuthFilter implements Filter {
     
     // Public URLs that don't require authentication
@@ -41,6 +41,8 @@ public class AuthFilter implements Filter {
         String requestURI = httpRequest.getRequestURI();
         String contextPath = httpRequest.getContextPath();
         String path = requestURI.substring(contextPath.length());
+        
+        System.out.println("Path = " + path);
         
         // Check if this is a public URL
         if (isPublicUrl(path)) {

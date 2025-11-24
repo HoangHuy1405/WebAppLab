@@ -173,18 +173,20 @@ public class UserDAO {
         return user;
     }
     
-    /**
-     * Test method - Generate hashed password
-     */
+   
+    
     public static void main(String[] args) {
-        // Generate hash for "password123"
-        String plainPassword = "password123";
-        String hashedPassword = BCrypt.hashpw(plainPassword, BCrypt.gensalt());
-        System.out.println("Plain: " + plainPassword);
-        System.out.println("Hashed: " + hashedPassword);
-        
-        // Test verification
-        boolean matches = BCrypt.checkpw(plainPassword, hashedPassword);
-        System.out.println("Verification: " + matches);
+        UserDAO dao = new UserDAO();
+
+        User user = dao.authenticate("admin", "password123");
+        if (user != null) {
+            System.out.println("Authentication successful!");
+            System.out.println(user);
+        } else {
+            System.out.println("Authentication failed!");
+        }
+
+        User invalidUser = dao.authenticate("admin", "wrongpassword");
+        System.out.println("Invalid auth: " + (invalidUser == null ? "Correctly rejected" : "ERROR!"));
     }
 }

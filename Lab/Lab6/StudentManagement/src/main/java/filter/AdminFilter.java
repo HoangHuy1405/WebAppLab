@@ -2,11 +2,11 @@ package filter;
 
 import model.User;
 
-import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebFilter;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -38,6 +38,10 @@ public class AdminFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         
         String action = httpRequest.getParameter("action");
+        
+        System.out.println("--- AdminFilter Debug ---");
+        System.out.println("Request Action: " + action);
+        System.out.println("Is Admin Action? " + isAdminAction(action));
         
         // Check if this action requires admin role
         if (isAdminAction(action)) {

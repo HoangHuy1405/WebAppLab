@@ -1,3 +1,4 @@
+util\PasswordHashGenerator.class
 dao\StudentDAO.class
 filter\AdminFilter.class
 test\Test.class
