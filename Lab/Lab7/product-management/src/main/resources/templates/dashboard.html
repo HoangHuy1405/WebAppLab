@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Product Management</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      .nav-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s;
+        font-size: 14px;
+      }
+
+      .btn-primary {
+        background-color: #007bff;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background-color: #0056b3;
+      }
+
+      .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+      }
+
+      .btn-secondary:hover {
+        background-color: #5a6268;
+      }
+
+      /* Dashboard Grid Layout */
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        background: #007bff;
+        color: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .stat-card.success {
+        background: #28a745;
+      }
+
+      .stat-card.warning {
+        background: #dc3545;
+      }
+
+      .stat-card.info {
+        background: #17a2b8;
+      }
+
+      .stat-icon {
+        font-size: 32px;
+        margin-bottom: 10px;
+      }
+
+      .stat-label {
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+
+      .stat-value {
+        font-size: 32px;
+        font-weight: bold;
+      }
+
+      .stat-value.currency {
+        font-size: 28px;
+      }
+
+      /* Section Styles */
+      .section {
+        margin-bottom: 30px;
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+      }
+
+      .section-title {
+        color: #333;
+        font-size: 20px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 600;
+      }
+
+      .section-icon {
+        font-size: 24px;
+      }
+
+      /* Category Stats */
+      .category-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+      }
+
+      .category-item {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #007bff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .category-name {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+      }
+
+      .category-count {
+        font-size: 24px;
+        font-weight: bold;
+        color: #007bff;
+      }
+
+      .category-count-label {
+        font-size: 12px;
+        color: #666;
+      }
+
+      /* Product Tables */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #007bff;
+        color: white;
+        font-weight: 600;
+      }
+
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+
+      .low-stock-indicator {
+        display: inline-block;
+        padding: 4px 8px;
+        background-color: #dc3545;
+        color: white;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .stock-ok {
+        color: #28a745;
+        font-weight: bold;
+      }
+
+      .stock-warning {
+        color: #ffc107;
+        font-weight: bold;
+      }
+
+      .stock-critical {
+        color: #dc3545;
+        font-weight: bold;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #666;
+        font-style: italic;
+      }
+
+      .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .alert-warning {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeaa7;
+      }
+
+      .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .badge-danger {
+        background-color: #dc3545;
+        color: white;
+      }
+
+      .badge-success {
+        background-color: #28a745;
+        color: white;
+      }
+
+      .badge-warning {
+        background-color: #ffc107;
+        color: #333;
+      }
+
+      .chart-placeholder {
+        text-align: center;
+        padding: 30px;
+        background: white;
+        border-radius: 8px;
+        color: #999;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>📊 Statistics Dashboard</h1>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <a th:href="@{/products}" class="btn btn-primary"
+          >📦 View All Products</a
+        >
+        <a th:href="@{/products/new}" class="btn btn-secondary"
+          >➕ Add Product</a
+        >
+      </div>
+
+      <!-- Low Stock Alert -->
+      <div
+        th:if="${lowStockCount > 0}"
+        class="alert alert-warning"
+        role="alert"
+      >
+        <span style="font-size: 24px">⚠️</span>
+        <div>
+          <strong>Low Stock Alert!</strong>
+          <span
+            th:text="${lowStockCount} + ' product(s) have low stock (below 10 units).'"
+          ></span>
+        </div>
+      </div>
+
+      <div
+        th:if="${lowStockCount == 0}"
+        class="alert alert-success"
+        role="alert"
+      >
+        <span style="font-size: 24px">✅</span>
+        <div><strong>All Good!</strong> No low stock items at the moment.</div>
+      </div>
+
+      <!-- Statistics Cards -->
+      <div class="dashboard-grid">
+        <!-- Total Products -->
+        <div class="stat-card">
+          <div class="stat-icon">📦</div>
+          <div class="stat-label">Total Products</div>
+          <div class="stat-value" th:text="${totalProducts}">0</div>
+        </div>
+
+        <!-- Total Inventory Value -->
+        <div class="stat-card success">
+          <div class="stat-icon">💰</div>
+          <div class="stat-label">Total Inventory Value</div>
+          <div
+            class="stat-value currency"
+            th:text="'$' + ${#numbers.formatDecimal(totalValue, 1, 2)}"
+          >
+            $0.00
+          </div>
+        </div>
+
+        <!-- Average Product Price -->
+        <div class="stat-card info">
+          <div class="stat-icon">📈</div>
+          <div class="stat-label">Average Product Price</div>
+          <div
+            class="stat-value currency"
+            th:text="'$' + ${#numbers.formatDecimal(averagePrice, 1, 2)}"
+          >
+            $0.00
+          </div>
+        </div>
+
+        <!-- Low Stock Products -->
+        <div class="stat-card warning">
+          <div class="stat-icon">⚠️</div>
+          <div class="stat-label">Low Stock Items</div>
+          <div class="stat-value" th:text="${lowStockCount}">0</div>
+        </div>
+      </div>
+
+      <!-- Products by Category Section -->
+      <div class="section">
+        <h2 class="section-title">
+          <span class="section-icon">🏷️</span>
+          Products by Category
+        </h2>
+
+        <div
+          th:if="${categoryStats != null and !categoryStats.isEmpty()}"
+          class="category-list"
+        >
+          <div
+            th:each="entry : ${categoryStats}"
+            class="category-item"
+            th:classappend="${entry.value < 5} ? 'low-count' : ''"
+          >
+            <div class="category-name" th:text="${entry.key}">Category</div>
+            <div class="category-count" th:text="${entry.value}">0</div>
+            <div class="category-count-label">products</div>
+          </div>
+        </div>
+
+        <div
+          th:if="${categoryStats == null or categoryStats.isEmpty()}"
+          class="empty-state"
+        >
+          No category data available.
+        </div>
+      </div>
+
+      <!-- Low Stock Products Section -->
+      <div class="section">
+        <h2 class="section-title">
+          <span class="section-icon">🚨</span>
+          Low Stock Products (Below 10 Units)
+        </h2>
+
+        <div
+          th:if="${lowStockProducts != null and !lowStockProducts.isEmpty()}"
+        >
+          <table>
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="product : ${lowStockProducts}">
+                <td th:text="${product.productCode}">P001</td>
+                <td th:text="${product.name}">Product Name</td>
+                <td th:text="${product.category}">Category</td>
+                <td
+                  th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 2)}"
+                >
+                  $0.00
+                </td>
+                <td>
+                  <span
+                    th:classappend="${product.quantity <= 3} ? 'stock-critical' : (${product.quantity <= 5} ? 'stock-warning' : 'stock-ok')"
+                    th:text="${product.quantity}"
+                  >
+                    0
+                  </span>
+                </td>
+                <td>
+                  <span
+                    th:if="${product.quantity <= 3}"
+                    class="badge badge-danger"
+                    >Critical</span
+                  >
+                  <span
+                    th:if="${product.quantity > 3 and product.quantity <= 5}"
+                    class="badge badge-warning"
+                    >Warning</span
+                  >
+                  <span
+                    th:if="${product.quantity > 5 and product.quantity < 10}"
+                    class="badge badge-warning"
+                    >Low</span
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          th:if="${lowStockProducts == null or lowStockProducts.isEmpty()}"
+          class="empty-state"
+        >
+          ✅ No low stock products. All inventory levels are healthy!
+        </div>
+      </div>
+
+      <!-- Recent Products Section -->
+      <div class="section">
+        <h2 class="section-title">
+          <span class="section-icon">🆕</span>
+          Recent Products (Last 5 Added)
+        </h2>
+
+        <div th:if="${recentProducts != null and !recentProducts.isEmpty()}">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="product : ${recentProducts}">
+                <td th:text="${product.id}">1</td>
+                <td th:text="${product.productCode}">P001</td>
+                <td th:text="${product.name}">Product Name</td>
+                <td th:text="${product.category}">Category</td>
+                <td
+                  th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 2)}"
+                >
+                  $0.00
+                </td>
+                <td th:text="${product.quantity}">0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          th:if="${recentProducts == null or recentProducts.isEmpty()}"
+          class="empty-state"
+        >
+          No products have been added yet.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
