@@ -8,7 +8,6 @@
 *.docx  
 
 #
-*.md
 *.zip
 
 /Lab/Lab4/StudentManagement/target/
