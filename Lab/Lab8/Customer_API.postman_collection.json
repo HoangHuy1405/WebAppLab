@@ -1,0 +1,492 @@
+{
+	"info": {
+		"_postman_id": "8d17c5a7-ab14-4112-9a55-e47ad8a40123",
+		"name": "WebAppLab",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26060818",
+		"_collection_link": "https://backend-team-5702.postman.co/workspace/Bazaar-Spring-Boot-project~4cc1f35e-588f-4569-a95b-72b5e0c7a3af/collection/26060818-8d17c5a7-ab14-4112-9a55-e47ad8a40123?action=share&source=collection_link&creator=26060818"
+	},
+	"item": [
+		{
+			"name": "Get All Customer",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/customers?sortBy=createdAt&sortDir=desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customers"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0",
+							"disabled": true
+						},
+						{
+							"key": "size",
+							"value": "5",
+							"disabled": true
+						},
+						{
+							"key": "sortBy",
+							"value": "createdAt"
+						},
+						{
+							"key": "sortDir",
+							"value": "desc"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Pagination & Sorting",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/customers?sortBy=createdAt&sortDir=desc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"customers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt"
+								},
+								{
+									"key": "sortDir",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 08 Dec 2025 17:07:00 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"totalItems\": 3,\n    \"totalPages\": 1,\n    \"customers\": [\n        {\n            \"id\": 2,\n            \"customerCode\": \"C002\",\n            \"fullName\": \"Jane Smith\",\n            \"email\": \"jane.smith@example.com\",\n            \"phone\": \"+1-555-0102\",\n            \"address\": \"456 Oak Ave, Los Angeles\",\n            \"status\": \"ACTIVE\",\n            \"createdAt\": \"2025-12-02T15:55:21\"\n        },\n        {\n            \"id\": 3,\n            \"customerCode\": \"C003\",\n            \"fullName\": \"Bob Johnson\",\n            \"email\": \"bob.johnson@example.com\",\n            \"phone\": \"+1-555-0103\",\n            \"address\": \"789 Pine Rd, Chicago\",\n            \"status\": \"ACTIVE\",\n            \"createdAt\": \"2025-12-02T15:55:21\"\n        },\n        {\n            \"id\": 73,\n            \"customerCode\": \"C004\",\n            \"fullName\": \"Ng Mai Hoang Huy\",\n            \"email\": \"ngmaihoanghuy@gmail.com\",\n            \"phone\": \"0332132142\",\n            \"address\": \"so 1 duong so 32\",\n            \"status\": \"ACTIVE\",\n            \"createdAt\": \"2025-12-02T10:35:02\"\n        }\n    ],\n    \"currentPage\": 0\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Customer by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fullName\": \"John Partially Updated\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customers/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customers",
+						"2"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0",
+							"disabled": true
+						},
+						{
+							"key": "size",
+							"value": "5",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create customer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerCode\": \"C001\",\r\n    \"fullName\": \"HoangHuy\",\r\n    \"email\": \"hoanghexample.com\",\r\n    \"phone\": \"0254\",\r\n    \"address\": \"so 1 duong 16\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customers"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0",
+							"disabled": true
+						},
+						{
+							"key": "size",
+							"value": "5",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerCode\": \"C010\",\r\n    \"fullName\": \"HoangHuy\",\r\n    \"email\": \"hoanghuy@example.com\",\r\n    \"phone\": \"025489100212\",\r\n    \"address\": \"so 1 duong 16\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/customers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"customers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "5",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 08 Dec 2025 17:23:01 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 74,\n    \"customerCode\": \"C010\",\n    \"fullName\": \"HoangHuy\",\n    \"email\": \"hoanghuy@example.com\",\n    \"phone\": \"025489100212\",\n    \"address\": \"so 1 duong 16\",\n    \"status\": \"ACTIVE\",\n    \"createdAt\": \"2025-12-09T00:23:01.771499\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerCode\": \"C010\",\r\n    \"fullName\": \"HoangHuy updated\",\r\n    \"email\": \"hoanghuy2@example.com\",\r\n    \"phone\": \"025489100212\",\r\n    \"address\": \"so 1 duong 16\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customers/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customers",
+						"2"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0",
+							"disabled": true
+						},
+						{
+							"key": "size",
+							"value": "5",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fullName\": \"John Updated partial\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customers/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customers",
+						"2"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0",
+							"disabled": true
+						},
+						{
+							"key": "size",
+							"value": "5",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerCode\": \"C010\",\r\n    \"fullName\": \"HoangHuy updated\",\r\n    \"email\": \"hoanghuy2@example.com\",\r\n    \"phone\": \"025489100212\",\r\n    \"address\": \"so 1 duong 16\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customers/75",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customers",
+						"75"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0",
+							"disabled": true
+						},
+						{
+							"key": "size",
+							"value": "5",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/customers/search?keyword=john",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customers",
+						"search"
+					],
+					"query": [
+						{
+							"key": "keyword",
+							"value": "john"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Advanced search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/customers/advanced-search?email=@example.com&status=ACTIVE",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customers",
+						"advanced-search"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "@example.com"
+						},
+						{
+							"key": "status",
+							"value": "ACTIVE"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtered by status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/customers/status/ACTIVE",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customers",
+						"status",
+						"ACTIVE"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
